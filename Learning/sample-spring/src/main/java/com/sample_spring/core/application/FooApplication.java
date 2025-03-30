@@ -1,5 +1,6 @@
 package com.sample_spring.core.application;
 
+import com.sample_spring.core.data.Bar;
 import com.sample_spring.core.data.Foo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,6 +1,5 @@
-package com.sample_spring.core;
+package com.sample_spring.core.application;
 
-import com.sample_spring.core.application.FooApplication;
 import com.sample_spring.core.data.Foo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
