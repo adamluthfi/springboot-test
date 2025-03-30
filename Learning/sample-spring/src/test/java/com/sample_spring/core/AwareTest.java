@@ -1,8 +1,6 @@
 package com.sample_spring.core;
 
-import com.sample_spring.core.data.Car;
-import com.sample_spring.core.processor.IdGeneratorBeanPostProcessor;
-import com.sample_spring.core.processor.PrefixIdGeneratorBeanPostProcessor;
+import com.sample_spring.core.service.AuthService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,13 +9,11 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-public class OrderedTest {
+public class AwareTest {
 
     @Configuration
     @Import({
-            Car.class,
-            IdGeneratorBeanPostProcessor.class,
-            PrefixIdGeneratorBeanPostProcessor.class
+            AuthService.class
     })
     public static class TestConfiguration {
 
@@ -32,11 +28,11 @@ public class OrderedTest {
     }
 
     @Test
-    void testCar() {
-        Car car = applicationContext.getBean(Car.class);
+    void testAware() {
+        AuthService authService = applicationContext.getBean(AuthService.class);
 
-        Assertions.assertNotNull(car.getId());
-        Assertions.assertTrue(car.getId().startsWith("SMP-"));
-        System.out.println(car.getId());
+        Assertions.assertNotNull("com.sample_spring.core.service.AuthService", authService.getBeanName());
+        Assertions.assertNotNull(authService.getApplicationContext());
+        Assertions.assertSame(applicationContext, authService.getApplicationContext());
     }
 }
