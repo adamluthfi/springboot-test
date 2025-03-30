@@ -1,6 +1,11 @@
 package com.sample_spring.core;
 
+import com.sample_spring.core.data.MultiFoo;
+import com.sample_spring.core.repository.CategoryRepository;
+import com.sample_spring.core.repository.CustomerRepository;
 import com.sample_spring.core.repository.ProductRepository;
+import com.sample_spring.core.service.CategoryService;
+import com.sample_spring.core.service.CustomerService;
 import com.sample_spring.core.service.ProductService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,4 +38,30 @@ public class ComponentTest {
 
         Assertions.assertSame(productRepository, productService.getProductRepository());
     }
+
+    @Test
+    void testSetterDependencyInjection() {
+        CategoryService categoryService = applicationContext.getBean(CategoryService.class);
+        CategoryRepository categoryRepository = applicationContext.getBean(CategoryRepository.class);
+
+        Assertions.assertSame(categoryRepository, categoryService.getCategoryRepository());
+    }
+
+    @Test
+    void testFieldDependencyInjection() {
+        CustomerService customerService = applicationContext.getBean(CustomerService.class);
+        CustomerRepository normalCustomerRepository = applicationContext.getBean("normalCustomerRepository",CustomerRepository.class);
+        CustomerRepository premiumCustomerRepository = applicationContext.getBean("premiumCustomerRepository",CustomerRepository.class);
+
+        Assertions.assertSame(normalCustomerRepository, customerService.getNormalCustomerRepository());
+        Assertions.assertSame(premiumCustomerRepository, customerService.getPremiumCustomerRepository());
+    }
+
+    @Test
+    void testObjectProvider() {
+        MultiFoo multiFoo = applicationContext.getBean(MultiFoo.class);
+        Assertions.assertEquals(3, multiFoo.getFoos().size());
+    }
+
+
 }
