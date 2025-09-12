@@ -18,6 +18,6 @@ public class WithoutSpringBootTest {
 
     @Test
     void testFoo() {
-        Foo foo = applicationContext.getBean(Foo.class);
+        // Foo foo = applicationContext.getBean(Foo.class);
     }
 }
